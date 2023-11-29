@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">Rent car bachgri</div>
+        <div class="col-sm-3">
+            <button class="btn " (click)="openMenu()" style="color: aliceblue;" >x</button>
+        </div>
+    </div>
+</div>
+<hr>
+<ul class="nav nav-pills flex-column mb-auto">
+  <li class="nav-item" *ngFor="let inter of interfaces">
+    <a href="{{inter.url}}" class="nav-link " [class.active]="inter.name =='Agences'" aria-current="page">
+      <i class="{{inter.icon}}"></i>
+      {{inter.name}}
+    </a>
+  </li>
+</ul>
+<hr>
+<div class="dropdown">
+  <span (click)="dropdown()" [class.rotate]="dropped == true" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+    <strong  >mdo</strong>
+  </span>
+  <ul class=" dropdown-menu-dark text-small " style="position: absolute;bottom: 31px;right: 0;" aria-labelledby="dropdownUser1" *ngIf="dropped == true">
+    <li><a class="dropdown-item" href="#">New project...</a></li>
+    <li><a class="dropdown-item" href="#">Settings</a></li>
+    <li><a class="dropdown-item" href="#">Profile</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Sign out</a></li>
+  </ul>
+</div>

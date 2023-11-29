@@ -1,0 +1,8 @@
+.MenuContainer{
+    position: absolute;
+    top: 0;
+}
+ 
+span.rotate::after{
+    transform: rotate(180deg);
+}

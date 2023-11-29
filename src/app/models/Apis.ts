@@ -1,0 +1,11 @@
+export const LOGIN = "localhost:4243/login"
+export const REGISTER = "http://localhost:4243/signup"
+export const INTERFACES = "http://localhost:4243/location/users/{id}/interfaces"
+export const ALLINTERFACES = "http://localhost:4243/location/users/interfaces"
+export const CLIENTS_TYPE = "http://localhost:4243/location/clients_type"
+export const CLIENTS = "http://localhost:4243/location/clients"
+export const USERS = "http://localhost:4243/location/users"
+export const AGENCES = "http://localhost:4243/location/agences"
+export const USER_AGENCES = 'http://localhost:4243/location/users/{id}/agences' 
+export const VOITURES =  "http://localhost:4243/location/voitures"              
+export const VOITURESByUser =  "http://localhost:4243/location/voitures"              

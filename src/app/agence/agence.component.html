@@ -1,0 +1,373 @@
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
+
+    
+
+<!-- Bootstrap core CSS -->
+<link href="https://getbootstrap.com//docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div class="myContainer" id="myContainer" >
+    <button class="btn " (click)="openMenu()" >O</button>
+    <div class="MenuContainer" style="z-index: 10000 !important;"    >
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh;" *ngIf="open==true">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">Rent car bachgri</div>
+                    <div class="col-sm-3">
+                        <button class="btn " (click)="openMenu()" style="color: aliceblue;" >x</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item" *ngFor="let inter of interfaces">
+                <a href="{{inter.url}}" class="nav-link " [class.active]="inter.name =='Agences'" aria-current="page">
+                <i class="{{inter.icon}}"></i>
+                {{inter.name}}
+                </a>
+            </li>
+            </ul>
+            <hr>
+            <div class="dropdown">
+                <span (click)="dropdown()" [class.rotate]="dropped == true" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong  >mdo</strong>
+                </span>
+                <ul class=" dropdown-menu-dark text-small " style="position: absolute;bottom: 31px;right: 0;" aria-labelledby="dropdownUser1" *ngIf="dropped == true">
+                    <li><a class="dropdown-item" href="#">New project...</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div>
+        <!-- <li class="btn btn-success fa fa-plus"><b (click)="onOpenModal(editedAgence, 'add')"> Add Agence</b></li> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+        <section class="pt-8 pt-md-9">
+            <div class="container">
+              <h2 class="text-dark fw-normal">
+                Mes Agences
+              </h2>
+              <!-- Form -->
+              <form class="mt-4" >
+                <div class="input-group input-group-lg shadow-sm" >
+                  <span (click)="onOpenModal(editedAgence, 'add')" class="input-group-text border-0 cursor-hande">
+                    <i class="fas fa-add fa-xs text-secondary mb-1"></i>
+                  </span>
+        
+                  <input type="text" id="searchA" (keypress)="searchAgence()"   class="form-control bg-white border-0 px-1" placeholder="Search...">
+        
+                  <span class="input-group-text border-0 py-1 pe-2">
+                    <button type="submit" class="btn btn-primary text-uppercase-bold-sm">
+                      Search
+                    </button>
+                  </span>
+                </div>
+              </form>
+              <!-- Categories -->
+              <div class="row mt-6" id="agencesContainer">
+                <!-- Category -->
+                <div class="col-md-4 mb-2 border-2 agence"   *ngFor="let agence of agences">
+                    <span class="delete btn btn-danger w-50 fas fa-trash" (click)="onOpenModal(agence, 'delete')" id="delete"></span> 
+                    <span class="edit btn btn-info w-50 fas fa-pencil" (click)="onOpenModal(agence, 'edit')" id="edite"></span> 
+                    <a href="" class="card align-items-center text-decoration-none border-0 hover-lift-light py-4">
+                        <span class="icon-circle icon-circle-lg bg-pastel-primary text-primary">
+                        {{agence.id}}
+                        </span>
+                        <span class="text-dark mt-3" >
+                            {{agence.name}}
+                        </span>
+                        <span class="text-dark mt-3 .align-items-center">
+                            {{agence.adresse}}
+                        </span>
+                            
+                    </a> 
+                </div>         
+              </div>
+            </div>
+        </section>
+    </div>
+
+</div>
+<div class="modal fade" id="addAgenceModal" tabindex="-1" role="dialog" aria-labelledby="editAgenceModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #addForm="ngForm"  (ngSubmit)="onAddAgence(addForm)">
+              <div class="row">
+                <div class="col">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" [(ngModel)]="addedAgence.name" name="name" class="form-control" id="name" required>
+  
+                </div>
+              </div> 
+              <div class="row">
+                <div class="col">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" [(ngModel)]="addedAgence.email" name="email" class="form-control" id="email" required>
+    
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input type="text" [(ngModel)]="addedAgence.phone" name="phone" class="form-control" id="phone" required>
+                </div> 
+              </div> 
+             
+              <div class="row">
+                <div class="col">
+                  <label for="adresse" class="form-label">Address</label>
+                  <input type="text" [(ngModel)]="addedAgence.adresse" name="username" class="form-control" id="adresse" required>
+                </div> 
+              </div>
+              
+              <div class="row">
+                <div class="col">
+                  <label for="ville" class="form-label">Ville</label>
+                  <input type="text" [(ngModel)]="addedAgence.ville" name="username" class="form-control" id="ville" required>
+                </div> 
+              </div> 
+              <div class="modal-footer">
+                  <button type="button" id="closeAddAgence" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form> 
+        </div>
+      </div>
+    </div>
+</div>
+<div class="modal fade w-100  " id="editAgenceModal" tabindex="-1" role="dialog" aria-labelledby="editAgenceModal" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen " role="document w-100">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Agence </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="editedAgence != null">
+          <form #editForm="ngForm" (ngSubmit)="onEditeAgence(editForm)">
+            <div class="row">
+                <div class="col">
+                    <!-- {{ editedAgence | json }} -->
+                    <form #editForm="ngForm"  (ngSubmit)="onEditeAgence(editForm)">
+                        <div class="row">
+                          <div class="col">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" [(ngModel)]="editedAgence.name" name="name" class="form-control" id="name" required>
+            
+                          </div>
+                        </div> 
+                        <div class="row">
+                          <div class="col">
+                              <label for="email" class="form-label">Email address</label>
+                              <input type="email" [(ngModel)]="editedAgence.email" name="email" class="form-control" id="email" required>
+              
+                            </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" [(ngModel)]="editedAgence.phone" name="phone" class="form-control" id="phone" required>
+                          </div> 
+                        </div> 
+                       
+                        <div class="row">
+                          <div class="col">
+                            <label for="adresse" class="form-label">Address</label>
+                            <input type="text" [(ngModel)]="editedAgence.adresse" name="adresse" class="form-control" id="adresse" required>
+                          </div> 
+                        </div>
+                        
+                        <div class="row">
+                          <div class="col">
+                            <label for="ville" class="form-label">Ville</label>
+                            <input type="text" [(ngModel)]="editedAgence.ville" name="ville" class="form-control" id="ville" required>
+                          </div> 
+                        </div> 
+                        <div class="modal-footer">
+                            <button type="button" id="closeAddAgence" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button [disabled]="editForm.invalid" type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                      </form> 
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-info form-control" (click)="changeCMDV('LIST')" [class.activebtn]="voitureCMD=='LIST'" >List</button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-info form-control" (click)="changeCMDV('ADD')" [class.activebtn]="voitureCMD=='ADD'" >ADD</button>
+                        </div>
+                    </div>
+                    <div *ngIf="voitureCMD == 'ADD'">
+                        Ajouter des voitures
+                        <form #addVForm="ngForm" >
+                            <div class="row">
+                                <div class="col">
+                                    <label for="name" class="form-label">Marque</label>
+                                    <input type="text"  [(ngModel)]="addVoiture.marque" value="{{addVoiture!.marque}}" name="marque" class="form-control" id="marque" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="name" class="form-label">Model</label>
+                                    <input type="text"  [(ngModel)]="addVoiture.model" value="{{addVoiture!.model}}" name="model" class="form-control" id="model" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="name" class="form-label">Années des fabrication</label>
+                                    <input type="text"  [(ngModel)]="addVoiture.anfab" value="{{addVoiture!.anfab}}" name="anfab" class="form-control" id="anfab" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="name" class="form-label">Categorie</label>
+                                    <input type="text"  [(ngModel)]="addVoiture.categorie" value="{{addVoiture!.categorie}}" name="categorie" class="form-control" id="categorie" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="name" class="form-label">Prix</label>
+                                    <input type="text"  [(ngModel)]="addVoiture.prix" value=" " name="prix" class="form-control" id="prix" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="file" #inputFile  style="margin-bottom: 5px;"  (cancel)="cancel()" (change)="onFileSelected($event)" id="file" class="form-control" name="file" >
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <button [disabled]="addVForm.invalid" class="btn btn-success form-control fas fa-add" (click)="AddVoitureToAgence()" ></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="voitureCMD == 'LIST'" >
+                        <br>
+                        <div class="input-group"> 
+                            <input type="text" class="form-control" placeholder="Search ..." aria-label="Input group example" aria-describedby="btnGroupAddon">
+                          </div>
+                        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+                        <div class="container">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-lg-12">
+                                <div class="main-box clearfix">
+                                    <div class="table-responsive">
+                                        <table class="table user-list">
+                                            <thead>
+                                                <tr>
+                                                    <th><span>Image</span></th>
+                                                    <th><span>Model</span></th>
+                                                    <th><span>Année </span></th>
+                                                    <th class="text-center"><span>Status</span></th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="overflow-y: auto;">
+                                                <tr *ngFor="let v of voitures">
+                                                    <td>
+                                                        <img src="/assets/{{v.imgurl}}" alt="" height="60" width="140">
+                                                        <a href="#" class="user-link">{{v.model}}</a>
+                                                        <span class="user-subhead">{{v.categorie}}</span>
+                                                    </td>
+                                                    <td>
+                                                        {{v.model}}
+                                                    </td>
+                                                    <td>
+                                                        {{v.anfab}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="v.disponible == true" class="label label-default">Disponible</span>
+                                                        <span *ngIf="v.disponible == false" class="label label-default">Indisponible</span>
+                                                    </td>
+                                                    <td style="width: 20%;">
+                                                        <b class="table-link">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                            </span>
+                                                        </b>
+                                                        <b class="table-link">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                            </span>
+                                                        </b>
+                                                        <b class="table-link danger" (click)="onOpenModalV(v, 'delete')">
+                                                            <span class="fa-stack ">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                            </span>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </form>
+        </div>
+        <button type="button" id="closeEditAgence" class="btn btn-secondary" data-dismiss="modal" (click)="resetVeh()">Anuller</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteAgenceModal" tabindex="-1" role="dialog" aria-labelledby="editAgenceModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">supprimer l'agence</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                are you sure yoy want to delete Agence :  "{{deletedAgence?.name}}" ? 
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="clodeDeleteAgence" class="btn btn-secondary" data-dismiss="modal">Anuller</button>
+                <button type="button" (click)="onDeleteAgence(deletedAgence)" class="btn btn-danger">Ok</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteVoitureModal" tabindex="-1" role="dialog" aria-labelledby="deleteVoitureModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">supprimer Voiture</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                are you sure yoy want to delete Agence :  "{{deletedVoiture?.model}}" ? 
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="clodeDeleteVoiture" class="btn btn-secondary" data-dismiss="modal">Anuller</button>
+                <button type="button" (click)="onDeleteVoiture(deletedVoiture)" class="btn btn-danger">Ok</button>
+            </div>
+        </div>
+    </div>
+  </div>

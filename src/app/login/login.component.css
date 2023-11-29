@@ -1,0 +1,66 @@
+.Container {
+    height: 95vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .Row {
+    width: 60%;
+    margin-left: 20%;
+    border: 2px solid;
+  }
+
+  .Row .btns {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .Row .btns button {
+    width: 50%; /* Adjust button width to fit two buttons in a row */
+    height: 38px;
+    background-color: rgb(29, 145, 247);
+    font-weight: bold;
+    color: white;
+    letter-spacing: 2px;
+    font-size: 17pt;
+    margin-bottom: 10px; /* Add some spacing between buttons */
+  }
+
+  .Row .btns button.active {
+    background-color: rgba(58, 155, 240, 0.76);
+  }
+
+  .cont {
+    position: relative;
+  }
+
+  .cont div {
+    width: 99%;
+    margin-left: 0.5%;
+  }
+
+  /* Add media query for smaller screens (e.g., mobile devices) */
+  @media (max-width: 500px) {
+    .Row {
+      width: 99%;
+      margin-left: 0.5%;
+    }
+
+    .Row .btns button {
+      width: 50%; /* Make buttons take full width on smaller screens */
+    }
+    .wait{
+        /* height: 100%; width: 100%; background-color: black; position: absolute; color: white;right: 0.50%;top: 0; */
+      }
+  }
+  .wait{
+    height: 100%; width: 110%; background-color: black; position: absolute; color: white;left: 0%;top: 0;border:  10px solid black;margin: 0;padding: 0;
+  }
+  .erreur{
+    color: rgba(229, 64, 97, 0.787);
+    font-weight: bold;
+    padding-left: 1cm;
+  }

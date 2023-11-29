@@ -1,0 +1,251 @@
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
+
+    
+
+<!-- Bootstrap core CSS -->
+<link href="https://getbootstrap.com//docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div class="myContainer" id="myContainer">
+    <button class="btn " (click)="openMenu()" >O</button>
+    <div class="MenuContainer" >
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh;" *ngIf="open==true">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">Rent car bachgri</div>
+                    <div class="col-sm-3">
+                        <button class="btn " (click)="openMenu()" style="color: aliceblue;" >x</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+              <li class="nav-item" *ngFor="let inter of interfaces">
+                <a href="{{inter.url}}" class="nav-link " [class.active]="inter.name =='Dashboard'" aria-current="page">
+                  <i class="{{inter.icon}}"></i>
+                  {{inter.name}}
+                </a>
+              </li>
+              
+            </ul>
+            <hr>
+            <div class="dropdown">
+              <span (click)="dropdown()" [class.rotate]="dropped == true" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong  >mdo</strong>
+              </span>
+              <ul class=" dropdown-menu-dark text-small " style="position: absolute;bottom: 31px;right: 0;" aria-labelledby="dropdownUser1" *ngIf="dropped == true">
+                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+    </div>
+    <!-- <pre>{{editedClient | json}}</pre> -->
+    <div class="container" id="mainContainer">
+  
+      <li class="btn btn-success fa fa-plus"><b (click)="onOpenModal(editedClient, 'add')"> Add client</b></li>
+        <div class="row">
+            <div class="col-md-4 col-xl-4" *ngFor="let client of clients">
+                <div class="card m-b-30">
+                    <div class="card-body row">
+                        <div class="col-6">
+                            <a href="/usersdetails/{{client.id}}"><img src="/assets/user.png" alt="" class="img-fluid rounded-circle w-60"></a>
+                        </div>
+                        <div class="col-6 card-title align-self-center mb-0">
+                            <h5>{{client.name}}</h5>
+                            <p class="m-0">{{client.username}}</p>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email : <a href="mailto:{{client.email}}">{{client.email}}</a></li>
+                        <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : {{client.phone}}</li>
+                        <li class="list-group-item"><i class="fa-solid fa-city float-right"></i>Ville : {{client.ville}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <div class="float-right btn-group btn-group-sm">
+                            <button (click)="onOpenModal(client, 'edit')" class="btn btn-info tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </button>
+                            <button (click)="onOpenModal(client, 'delete')" class="btn btn-danger tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash"></i></button>
+                        </div>
+                        <ul class="social-links list-inline mb-0">
+                            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook-f"></i></a></li>
+                            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Skype"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</div>
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Employé </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="editedClient != null">
+        <form #editForm="ngForm" (ngSubmit)="onEditeClient(addForm)">
+          <div class="row">
+            <div class="col">
+              <label for="name" class="form-label">Name</label>
+              <input type="text"  [(ngModel)]="editedClient.name" value="{{editedClient!.name}}" name="name" class="form-control" id="name" required>
+            </div>
+            <div class="col">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" [(ngModel)]="editedClient!.email"  value="{{editedClient!.email}}" name="email" class="form-control" id="email" required>
+
+            </div>
+          </div> 
+        
+          <div class="row">
+            <div class="col">
+              <label for="phone" class="form-label">Phone</label>
+              <input type="text"  [(ngModel)]="editedClient!.phone" value="{{editedClient!.phone}}" name="phone" class="form-control" id="phone" required>
+            </div>
+            <div class="col">
+              <label for="permet" class="form-label">Permet</label>
+              <input type="text" [(ngModel)]="editedClient!.permet" value="{{editedClient!.permet}}" name="permet" class="form-control" id="permet" required>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col">
+              <label for="cin" class="form-label">CIN</label>
+              <input type="text" [(ngModel)]="editedClient!.cin" value="{{editedClient!.cin}}"  name="cin" class="form-control" id="cin" required>
+            </div>
+            <div class="col">
+              <label for="ville" class="form-label">Ville</label>
+              <input type="text" [(ngModel)]="editedClient!.ville" value="{{editedClient!.ville}}"  name="ville" class="form-control" id="ville">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" [(ngModel)]="editedClient!.username" value="{{editedClient!.username}}" name="username" class="form-control" id="username" required>
+            </div>    
+          </div>
+          <div class="row">           
+            <div class="col">  
+              <label for="interfaces" class="form-label">Interfaces</label>
+              <select [(ngModel)]="editedClient.interfaces" name="interfaces" class="form-control" id="interfaces" multiple required>
+                <option *ngFor="let i of allInterfaces" value="{{i.id}}" selected>{{ i.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" id="closeAddEmployee" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
+            <div class="row">
+              <div class="col">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" [(ngModel)]="addedClient.name" name="name" class="form-control" id="name" required>
+
+              </div>
+              <div class="col">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" [(ngModel)]="addedClient.email" name="email" class="form-control" id="email" required>
+
+              </div>
+            </div> 
+          
+            <div class="row">
+              <div class="col">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="text" [(ngModel)]="addedClient.phone" name="phone" class="form-control" id="phone" required>
+              </div>
+              <div class="col">
+                <label for="permet" class="form-label">Permet</label>
+                <input type="text" [(ngModel)]="addedClient.permet" name="permet" class="form-control" id="permet" required>
+              </div>
+            </div> 
+            <div class="row">
+              <div class="col">
+                <label for="cin" class="form-label">CIN</label>
+                <input type="text" [(ngModel)]="addedClient.cin" name="cin" class="form-control" id="cin" required>
+              </div>
+              <div class="col">
+                <label for="ville" class="form-label">Ville</label>
+                <input type="text" [(ngModel)]="addedClient.ville" name="ville" class="form-control" id="ville">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" [(ngModel)]="addedClient.username" name="username" class="form-control" id="username" required>
+              </div>
+              <div class="col">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" [(ngModel)]="addedClient.password" name="password" class="form-control" id="password" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="role" class="form-label">Role</label>
+                <select [(ngModel)]="addedClient.role.id" name="role" class="form-control" id="role" required>
+                    <option value="1">Admin</option>
+                    <option value="">Manager</option>
+                    <option value="">Employee</option>
+                </select>
+
+              </div>
+              <div class="col">
+                <label for="interfaces" class="form-label">Interfaces</label>
+                <select [(ngModel)]="addedClient.interfaces" name="interfaces" class="form-control" id="interfaces" multiple required>
+                    <option *ngFor="let i of allInterfaces" value="{{i.id}}">{{i.name}}</option> 
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeAddEmployee" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body">
+              are you sure yoy want to delete Employe "{{deletedClient?.name}}" ? 
+          </div>
+          <div class="modal-footer">
+              <button type="button" id="clodeDeleteEmployee" class="btn btn-secondary" data-dismiss="modal">Anuller</button>
+              <button type="button" (click)="onDeleteEmployee(deletedClient)" class="btn btn-danger">Ok</button>
+          </div>
+      </div>
+  </div>
+</div>
